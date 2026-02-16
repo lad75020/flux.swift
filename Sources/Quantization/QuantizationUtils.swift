@@ -290,14 +290,18 @@ extension QuantizationUtils {
                     
                     allWeights.append(("\(path).weight", quantizedWeight))
                     allWeights.append(("\(path).scales", quantizedLinear.scales))
-                    allWeights.append(("\(path).biases", quantizedLinear.biases))
+                    if let biases = quantizedLinear.biases {
+                        allWeights.append(("\(path).biases", biases))
+                    }
                     if let bias = quantizedLinear.bias {
                         allWeights.append(("\(path).bias", bias))
                     }
                     
                     logger.debug("    Weight shape: \(quantizedLinear.weight.shape)")
                     logger.debug("    Scales shape: \(quantizedLinear.scales.shape)")
-                    logger.debug("    Biases shape: \(quantizedLinear.biases.shape)")
+                    if let biases = quantizedLinear.biases {
+                        logger.debug("    Biases shape: \(biases.shape)")
+                    }
                     logger.debug("    Bits: \(quantizedLinear.bits), GroupSize: \(quantizedLinear.groupSize)")
                 } else {
                     logger.debug("  - Found regular Linear layer")
