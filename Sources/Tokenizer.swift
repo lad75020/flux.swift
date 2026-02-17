@@ -121,7 +121,7 @@ public class CLIPTokenizer {
         // a much more thorough job here but this should suffice for 95% of
         // cases.
 
-        let clean = text.lowercased().replacing(/\s+/, with: " ")
+        let clean = text.lowercased().replacing(try! Regex("\\s+"), with: " ")
         let tokens = clean.matches(of: pattern).map { String($0.0) }
 
         // Split the tokens according to the byte-pair merge file
